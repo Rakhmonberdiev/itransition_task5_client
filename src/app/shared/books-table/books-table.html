@@ -1,0 +1,95 @@
+@if(books()?.length){
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>ISBN</th>
+        <th>Title</th>
+        @if(!isMobile()){
+        <th>Authors</th>
+        <th>Publisher</th>
+        <th>Likes</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (book of books(); track $index) {
+      <tr
+        class="cursor-pointer select-none"
+        [class.bg-blue-100]="expandedIndex() === book.index"
+        (click)="toggle(book)"
+      >
+        <td>{{ book.index }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.title }}</td>
+        @if(!isMobile()){
+        <td>{{ book.authors.join(", ") }}</td>
+        <td>{{ book.publisher }}</td>
+        <td>{{ book.likes }}</td>
+        }
+      </tr>
+      @if(expandedIndex() === book.index){
+      <tr>
+        <td
+          [attr.colspan]="isMobile() ? 3 : 6"
+          class="p-4 bg-base-100 border-t-0"
+        >
+          <div
+            class="detail-container"
+            [class.open]="expandedIndex() === book.index"
+          >
+            <div class="flex flex-col md:flex-row gap-4">
+              <img
+                [src]="'https://placehold.co/240x320?text=' + book.title"
+                alt="Cover"
+                class="w-full md:w-32 lg:w-48 h-auto"
+              />
+              <div class="flex-1">
+                <h3 class="text-xl font-bold">
+                  {{ book.title }}
+                </h3>
+                <p class="italic mb-2">by {{ book.authors.join(", ") }}</p>
+                <p class="text-sm text-gray-600 mb-2">
+                  {{ book.publisher }}
+                </p>
+                <div class="badge p-4 badge-soft badge-secondary mb-2">
+                  {{ book.likes }}
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      class="bi bi-heart-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                @if(book.reviews.length){
+                <h4 class="font-semibold mb-2">Reviews</h4>
+                <ul class="space-y-3">
+                  @for (rv of book.reviews; track $index) {
+                  <li>
+                    <p>{{ rv.text }}</p>
+                    <p class="text-xs text-gray-500">— {{ rv.author }}</p>
+                  </li>
+                  }
+                </ul>
+                }
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>
+
+}

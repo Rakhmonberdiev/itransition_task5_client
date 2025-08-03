@@ -1,0 +1,68 @@
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-2">
+  <div>
+    <p class="fieldset-legend">Language</p>
+    <select
+      class="select w-full"
+      [value]="locale()"
+      (change)="locale.set($any($event.target).value)"
+    >
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="de">DE</option>
+    </select>
+  </div>
+  <div>
+    <p class="fieldset-legend">Seed</p>
+    <label class="input w-full">
+      <input
+        type="number"
+        min="0"
+        class="grow no-spin"
+        [value]="seed()"
+        (input)="onSeedInput($event)"
+        (keydown)="blockNonNumeric($event)"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-shuffle"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"
+        />
+        <path
+          d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"
+        />
+      </svg>
+    </label>
+  </div>
+  <div class="flex flex-col h-full">
+    <p class="fieldset-legend">Avg Likes: {{ avgLikes() }}</p>
+
+    <input
+      type="range"
+      min="0"
+      max="100"
+      step="0.1"
+      class="range range-sm w-full my-auto"
+      [value]="avgLikes()"
+      (input)="avgLikes.set($any($event.target).valueAsNumber)"
+    />
+  </div>
+  <div class="flex flex-col h-full">
+    <p class="fieldset-legend">Avg Reviews: {{ avgReviews().toFixed(1) }}</p>
+    <input
+      type="range"
+      min="0"
+      max="10"
+      step="0.1"
+      class="range range-sm w-full my-auto"
+      [value]="avgReviews()"
+      (input)="avgReviews.set($any($event.target).valueAsNumber)"
+    />
+  </div>
+</div>
